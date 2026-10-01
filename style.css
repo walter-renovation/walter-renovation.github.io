@@ -320,14 +320,12 @@ body { overflow-x: clip; }
 #title .ch.worn { color: transparent; -webkit-background-clip: text; background-clip: text; background-repeat: no-repeat; }
 #title.is-game .ch.worn:hover { filter: brightness(1.2); }
 /* peinture fraîche : révélée de haut en bas, au rythme du rouleau */
-#title .ch.fresh { animation: paintIn .72s cubic-bezier(.5, 0, .3, 1) both; }
+#title .ch.fresh { animation: paintIn .56s cubic-bezier(.45, 0, .3, 1) both; }
 @keyframes paintIn {
   from { clip-path: inset(-20% -20% 100% -20%); filter: brightness(1.25); }
   80% { filter: brightness(1.25); }
   to { clip-path: inset(-20% -20% -20% -20%); filter: none; }
 }
-#title .ch.aging { animation: agingIn .6s ease both; }
-@keyframes agingIn { from { opacity: .15; filter: blur(4px); } }
 
 .shards { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
 .shard { position: absolute; left: 0; top: 0; color: var(--text); white-space: pre; will-change: transform, opacity; }
@@ -335,13 +333,13 @@ body { overflow-x: clip; }
 .drop { background: var(--text); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
 /* le rouleau */
 .roller {
-  position: absolute; height: 18px; border-radius: 7px;
+  position: absolute; height: 12px; border-radius: 6px;
   background: repeating-linear-gradient(90deg, #f6f4ee 0 7px, #dedad0 7px 9px);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, .35), inset 0 -3px 0 rgba(0, 0, 0, .08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
   will-change: transform, opacity;
 }
-.roller::after { content: ""; position: absolute; right: -9px; top: 5px; width: 9px; height: 3px; background: var(--lime); border-radius: 2px; }
-.roller::before { content: ""; position: absolute; right: -9px; top: -26px; width: 3px; height: 34px; background: var(--lime); border-radius: 2px; }
+.roller::after { content: ""; position: absolute; right: -8px; top: 4px; width: 8px; height: 2px; background: var(--lime); border-radius: 2px; }
+.roller::before { content: ""; position: absolute; right: -8px; top: -20px; width: 2px; height: 26px; background: var(--lime); border-radius: 2px; }
 
 .hero__hint {
   display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
@@ -353,16 +351,6 @@ body { overflow-x: clip; }
 .js .hero__hint { opacity: 0; animation: fadeUp .8s ease 1.5s forwards; }
 .js .hero__hint.is-used { animation: none; opacity: 0; }
 
-.hero__rebuild {
-  position: absolute; left: 0; top: 100%; margin-top: 10px; z-index: 4;
-  padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--line);
-  background: rgba(14, 14, 13, .6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  color: var(--text); font: 500 15px/1.2 var(--body); cursor: pointer; white-space: nowrap;
-  animation: fadeUp .6s cubic-bezier(.2, .8, .2, 1) both;
-  transition: border-color .2s ease;
-}
-.hero__rebuild b { color: var(--lime); font-weight: 700; margin-left: 6px; }
-.hero__rebuild:hover { border-color: var(--lime); }
 
 /* ============================================================
    PAGE DEVIS
@@ -445,5 +433,5 @@ body { overflow-x: clip; }
   .hero__in { opacity: 1 !important; transform: none !important; }
   .js .hero h1 .line > span, .js .hero__where, .js .hero__bottom { opacity: 1; transform: none; animation: none; }
   .hero__in::after, .logo i, .hero__hint::before { animation: none; }
-  #title .ch.fresh, #title .ch.aging { animation: none; }
+  #title .ch.fresh { animation: none; }
 }

@@ -132,7 +132,6 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   const hero = document.querySelector(".hero");
   const layer = document.getElementById("shards");
   const hint = document.getElementById("hint");
-  const again = document.getElementById("rebuild");
   if (!title || !layer) return;
 
   const OLD = "#958f83"; // teinte de l'ancien enduit
@@ -207,7 +206,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     const ix = Math.max(w * 0.2, Math.min(w * 0.8, cx - (left + hr.left)));
     const iy = Math.max(h * 0.2, Math.min(h * 0.8, cy - (top + hr.top)));
     const cs = getComputedStyle(ch);
-    const n = 7, perim = 2 * (w + h), pts = [];
+    const n = 5, perim = 2 * (w + h), pts = [];
     for (let k = 0; k < n; k++) {
       const t = ((((k + rand(-0.3, 0.3)) / n) * perim) + perim) % perim;
       if (t < w) pts.push([t, 0]);
@@ -228,55 +227,65 @@ if ("IntersectionObserver" in window && !reduceMotion) {
       });
       layer.append(el);
       const mx = (a[0] + b[0]) / 2 - ix, my = (a[1] + b[1]) / 2 - iy, m = Math.hypot(mx, my) || 1;
-      const sp = rand(60, 180); // les plaques tombent plus qu'elles n'explosent
+      const sp = rand(40, 120); // les plaques tombent plus qu'elles n'explosent
       launch({ el, x: left, y: top, vx: (mx / m) * sp, vy: (my / m) * sp - rand(40, 140), g: 2100, r: 0, vr: rand(-200, 200), life: rand(1, 1.5) });
     }
   }
 
-  // le rouleau descend sur la lettre et la repeint
-  function roll(ch) {
-    const hr = hero.getBoundingClientRect(), r = ch.getBoundingClientRect();
+  // un seul rouleau, plus discret, passe sur le mot entier
+  function roll(word) {
+    const hr = hero.getBoundingClientRect();
+    const rs = word.map((ch) => ch.getBoundingClientRect());
+    const left = Math.min(...rs.map((r) => r.left)), right = Math.max(...rs.map((r) => r.right));
+    const top = Math.min(...rs.map((r) => r.top)), bottom = Math.max(...rs.map((r) => r.bottom));
     const el = document.createElement("span");
     el.className = "roller";
-    el.style.width = r.width + 16 + "px";
-    el.style.left = r.left - hr.left - 8 + "px";
-    el.style.top = r.top - hr.top + "px";
+    el.style.width = right - left + 10 + "px";
+    el.style.left = left - hr.left - 5 + "px";
+    el.style.top = top - hr.top + "px";
     layer.append(el);
     el.animate(
       [
-        { transform: "translateY(-14px)", opacity: 0 },
-        { transform: "translateY(0)", opacity: 1, offset: 0.12 },
-        { transform: `translateY(${r.height - 6}px)`, opacity: 1, offset: 0.85 },
-        { transform: `translateY(${r.height + 6}px)`, opacity: 0 },
+        { transform: "translateY(-8px)", opacity: 0 },
+        { transform: "translateY(0)", opacity: 0.9, offset: 0.15 },
+        { transform: `translateY(${bottom - top - 8}px)`, opacity: 0.9, offset: 0.8 },
+        { transform: `translateY(${bottom - top}px)`, opacity: 0 },
       ],
-      { duration: 720, easing: "cubic-bezier(.5, 0, .3, 1)" }
+      { duration: 560, easing: "cubic-bezier(.45, 0, .3, 1)" }
     ).onfinish = () => el.remove();
-    // quelques gouttes de peinture
+    // deux ou trois gouttes seulement
     setTimeout(() => {
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 3; i++) {
         const d = document.createElement("i");
         d.className = "drop";
-        const s = rand(4, 8);
-        d.style.width = s + "px";
-        d.style.height = s * 1.3 + "px";
+        const sz = rand(3, 6);
+        d.style.width = sz + "px";
+        d.style.height = sz * 1.3 + "px";
         layer.append(d);
-        launch({ el: d, x: r.left - hr.left + rand(0, r.width), y: r.bottom - hr.top - 4, vx: rand(-40, 40), vy: rand(-60, 40), g: 1400, r: 0, vr: 0, life: rand(0.5, 0.9), s: true });
+        launch({ el: d, x: left - hr.left + rand(0, right - left), y: bottom - hr.top - 4, vx: rand(-20, 20), vy: rand(-20, 30), g: 1200, r: 0, vr: 0, life: rand(0.4, 0.7), s: true });
       }
-    }, 560);
+    }, 440);
   }
 
+  // un clic sur une lettre repeint tout le mot (« Tout », puis « refaire »)
   function renovate(ch, cx, cy) {
     if (!ch || !ch.classList.contains("worn")) return;
+    const word = [...ch.parentElement.querySelectorAll(".ch.worn")];
     hint.classList.add("is-used");
-    if (!reduceMotion) { strip(ch, cx, cy); roll(ch); }
-    ch.classList.remove("worn");
-    ch.style.removeProperty("background-image");
-    ch.style.removeProperty("background-size");
-    ch.classList.add("fresh");
-    if (letters.every((l) => !l.classList.contains("worn"))) setTimeout(() => (again.hidden = false), 900);
+    if (!reduceMotion) {
+      word.forEach((l) => strip(l, cx, cy));
+      roll(word);
+    }
+    word.forEach((l) => {
+      l.classList.remove("worn");
+      l.style.removeProperty("background-image");
+      l.style.removeProperty("background-size");
+      l.classList.add("fresh");
+    });
+    if (letters.every((l) => !l.classList.contains("worn"))) title.classList.remove("is-game"); // terminé : il reste propre
   }
 
-  // clic sur une lettre, ou glisser le rouleau sur plusieurs lettres
+  // clic sur un mot, ou glisser le rouleau dessus
   let painting = false;
   const letterAt = (x, y) => document.elementFromPoint(x, y)?.closest("#title .ch:not(.dot)");
   title.addEventListener("pointerdown", (e) => {
@@ -291,16 +300,6 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     if (painting) renovate(letterAt(e.clientX, e.clientY), e.clientX, e.clientY);
   });
   ["pointerup", "pointercancel"].forEach((t) => window.addEventListener(t, () => (painting = false)));
-
-  // recommencer : le titre redevient « usé »
-  again.addEventListener("click", () => {
-    again.hidden = true;
-    letters.forEach((ch, i) => setTimeout(() => {
-      age(ch);
-      ch.classList.add("aging");
-      ch.addEventListener("animationend", () => ch.classList.remove("aging"), { once: true });
-    }, i * 45));
-  });
 })();
 
 /* ---------- formulaire en 3 étapes ---------- */
