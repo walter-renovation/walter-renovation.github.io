@@ -95,7 +95,7 @@
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Rénovation", replyto: v.email, ...v }),
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Robert Walter Rénovation", replyto: v.email, ...v }),
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);

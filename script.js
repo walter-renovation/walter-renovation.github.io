@@ -7,7 +7,7 @@
    messagerie du visiteur avec la demande pré-remplie.
    ============================================================ */
 const WEB3FORMS_KEY = "";
-const CONTACT_EMAIL = "contact@bastion-renovation.fr";
+const CONTACT_EMAIL = "walterrobert88@gmail.com";
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -376,7 +376,7 @@ async function send() {
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Rénovation", ...d }),
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Robert Walter Rénovation", ...d }),
     });
     const json = await res.json();
     if (!json.success) throw new Error(json.message);
@@ -384,7 +384,7 @@ async function send() {
     show(LAST + 1);
   } catch {
     const err = form.querySelector('.err[data-for="3"]');
-    err.textContent = "L’envoi a échoué. Appelez-moi au 06 00 00 00 00.";
+    err.textContent = "L’envoi a échoué. Appelez-moi au 06 41 29 78 69.";
     err.classList.add("show");
     next.textContent = "Réessayer";
   } finally {
