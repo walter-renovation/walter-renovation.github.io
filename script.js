@@ -7,20 +7,21 @@
    messagerie du visiteur avec la demande pré-remplie.
    ============================================================ */
 const WEB3FORMS_KEY = "";
-const CONTACT_EMAIL = "contact@bastion-demolition.fr";
+const CONTACT_EMAIL = "contact@bastion-renovation.fr";
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- vidéo de fond (ordinateur uniquement, pour épargner les forfaits mobiles) ---------- */
+/* ---------- vidéo de fond (désactivée si économie de données ou animations réduites) ---------- */
 const video = document.getElementById("hero-video");
 const saveData = navigator.connection && navigator.connection.saveData;
-if (video && !reduceMotion && !saveData && window.matchMedia("(min-width: 900px)").matches) {
+if (video && !reduceMotion && !saveData) {
   let heroVisible = true;
   const play = () => { if (heroVisible && !document.hidden) video.play().catch(() => {}); };
 
-  video.src = video.dataset.src;
+  // fichier léger (≈ 2 Mo) : version 540p sur petit écran
+  video.src = window.matchMedia("(max-width: 900px)").matches ? video.dataset.srcSmall : video.dataset.src;
   video.loop = true;
   video.addEventListener("playing", () => video.classList.add("is-playing"), { once: true });
   // filet de sécurité : certains navigateurs (Brave notamment) ratent la boucle d'un long fichier distant
@@ -125,7 +126,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   revealables.forEach((el) => el.classList.add("is-in"));
 }
 
-/* ---------- mini-jeu : démolir « Place nette. » lettre par lettre ---------- */
+/* ---------- mini-jeu : casser « Tout refaire. » lettre par lettre ---------- */
 (() => {
   const title = document.getElementById("title");
   const hero = document.querySelector(".hero");
@@ -373,7 +374,7 @@ async function send() {
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Démolition", ...d }),
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Rénovation", ...d }),
     });
     const json = await res.json();
     if (!json.success) throw new Error(json.message);

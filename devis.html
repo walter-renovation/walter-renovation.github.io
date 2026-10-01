@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demande de devis · Bastion Démolition</title>
-<meta name="description" content="Demandez un devis gratuit pour votre démolition, curage, terrassement ou évacuation de gravats dans le Var. Réponse sous 48 h.">
+<title>Demande de devis · Bastion Rénovation</title>
+<meta name="description" content="Demandez un devis gratuit pour la rénovation de votre salle de bain, cuisine, murs ou sols dans le Var. Réponse sous 48 h.">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
       <div class="dp-contact">
         <span>Vous préférez appeler&nbsp;?</span>
         <a href="tel:+33600000000">06 00 00 00 00</a>
-        <a class="dp-mail" href="mailto:contact@bastion-demolition.fr">contact@bastion-demolition.fr</a>
+        <a class="dp-mail" href="mailto:contact@bastion-renovation.fr">contact@bastion-renovation.fr</a>
       </div>
     </aside>
 
@@ -48,10 +48,13 @@
         <div class="dp-field">
           <span class="dp-label">Type de travaux *</span>
           <div class="choices choices--multi">
-            <label><input type="checkbox" name="travaux" value="Démolition"><span>Démolition</span></label>
-            <label><input type="checkbox" name="travaux" value="Curage"><span>Curage</span></label>
-            <label><input type="checkbox" name="travaux" value="Terrassement"><span>Terrassement</span></label>
-            <label><input type="checkbox" name="travaux" value="Évacuation de gravats"><span>Évacuation</span></label>
+            <label><input type="checkbox" name="travaux" value="Rénovation complète"><span>Rénovation complète</span></label>
+            <label><input type="checkbox" name="travaux" value="Salle de bain"><span>Salle de bain</span></label>
+            <label><input type="checkbox" name="travaux" value="Cuisine"><span>Cuisine</span></label>
+            <label><input type="checkbox" name="travaux" value="Plâtrerie / isolation"><span>Plâtrerie / isolation</span></label>
+            <label><input type="checkbox" name="travaux" value="Carrelage / sols"><span>Carrelage / sols</span></label>
+            <label><input type="checkbox" name="travaux" value="Peinture"><span>Peinture</span></label>
+            <label><input type="checkbox" name="travaux" value="Démolition / dépose"><span>Démolition / dépose</span></label>
             <label><input type="checkbox" name="travaux" value="Autre"><span>Autre</span></label>
           </div>
           <p class="dp-err" data-err="travaux">Cochez au moins un type de travaux.</p>
@@ -64,16 +67,13 @@
               <option value="">Choisir…</option>
               <option>Maison</option>
               <option>Appartement</option>
-              <option>Garage / abri</option>
-              <option>Mur / muret</option>
-              <option>Terrain</option>
               <option>Local professionnel</option>
               <option>Autre</option>
             </select>
           </label>
           <label class="field">
             <span>Surface approximative (m²)</span>
-            <input type="number" name="surface" min="1" inputmode="numeric" placeholder="ex. 40">
+            <input type="number" name="surface" min="1" inputmode="numeric" placeholder="ex. 12">
           </label>
         </div>
 
@@ -96,8 +96,19 @@
         </div>
 
         <label class="field">
+          <span>Budget envisagé</span>
+          <select name="budget">
+            <option value="">Je ne sais pas encore</option>
+            <option>Moins de 5 000 €</option>
+            <option>5 000 à 15 000 €</option>
+            <option>15 000 à 30 000 €</option>
+            <option>Plus de 30 000 €</option>
+          </select>
+        </label>
+
+        <label class="field">
           <span>Décrivez votre projet</span>
-          <textarea name="message" rows="5" placeholder="Accès au chantier, étage, matériaux, présence d’amiante connue, ce qui doit rester debout…"></textarea>
+          <textarea name="message" rows="5" placeholder="Pièces concernées, état actuel, ce que vous aimeriez obtenir, matériaux souhaités…"></textarea>
         </label>
       </fieldset>
 
@@ -156,7 +167,7 @@
   <div class="foot__row">
     <a class="logo" href="index.html">Bastion<i></i></a>
     <a href="tel:+33600000000">06 00 00 00 00</a>
-    <a href="mailto:contact@bastion-demolition.fr">contact@bastion-demolition.fr</a>
+    <a href="mailto:contact@bastion-renovation.fr">contact@bastion-renovation.fr</a>
     <span>Auto-entrepreneur · Var (83)</span>
     <span class="foot__small">© <span id="year">2026</span> · <a href="#">Mentions légales</a></span>
   </div>

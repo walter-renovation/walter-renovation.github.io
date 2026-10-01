@@ -69,6 +69,7 @@
       surface: d.get("surface") ? d.get("surface") + " m²" : "Non précisée",
       commune: d.get("commune").trim(),
       delai: d.get("delai") || "Non précisé",
+      budget: d.get("budget") || "Non précisé",
       message: d.get("message").trim() || "(aucun détail)",
       nom: d.get("nom").trim(),
       telephone: d.get("telephone").trim(),
@@ -81,7 +82,7 @@
     if (!WEB3FORMS_KEY) {
       const body = [
         `Travaux : ${v.travaux}`, `Type de bien : ${v.bien}`, `Surface : ${v.surface}`,
-        `Commune : ${v.commune}`, `Démarrage : ${v.delai}`, "", v.message, "",
+        `Commune : ${v.commune}`, `Démarrage : ${v.delai}`, `Budget : ${v.budget}`, "", v.message, "",
         `Nom : ${v.nom}`, `Téléphone : ${v.telephone}`, `E-mail : ${v.email}`, `Recontacter par : ${v.contact}`,
       ].join("\n");
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -94,7 +95,7 @@
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Démolition", replyto: v.email, ...v }),
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: "Site Bastion Rénovation", replyto: v.email, ...v }),
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
