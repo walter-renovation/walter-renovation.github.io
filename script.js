@@ -126,45 +126,68 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   revealables.forEach((el) => el.classList.add("is-in"));
 }
 
-/* ---------- mini-jeu : casser « Tout refaire. » lettre par lettre ---------- */
+/* ---------- mini-jeu : rénover « Tout refaire. » lettre par lettre ---------- */
 (() => {
   const title = document.getElementById("title");
   const hero = document.querySelector(".hero");
   const layer = document.getElementById("shards");
   const hint = document.getElementById("hint");
-  const rebuild = document.getElementById("rebuild");
+  const again = document.getElementById("rebuild");
   if (!title || !layer) return;
 
-  // chaque lettre devient un bloc qu'on peut frapper
+  const OLD = "#958f83"; // teinte de l'ancien enduit
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  // chaque lettre devient un bloc qu'on peut rénover
   title.querySelectorAll(".line > span").forEach((line) => {
     line.setAttribute("aria-hidden", "true");
     const text = line.textContent;
     line.textContent = "";
     [...text].forEach((c) => {
       const ch = document.createElement("span");
-      ch.className = "ch";
+      ch.className = c === "." ? "ch dot" : "ch"; // le point reste en vert fluo, hors jeu
       ch.textContent = c;
       line.append(ch);
     });
   });
-  const letters = [...title.querySelectorAll(".ch")];
+  const letters = [...title.querySelectorAll(".ch:not(.dot)")];
+
+  /* --- aspect « usé » : enduit terne, taches, fissures, éclats, peints DANS la lettre --- */
+  function age(ch) {
+    const w = ch.offsetWidth, h = ch.offsetHeight;
+    let shapes = "";
+    for (let i = 0; i < 5; i++) {
+      shapes += `<ellipse cx="${rand(0, w).toFixed(1)}" cy="${rand(0, h).toFixed(1)}" rx="${rand(w * 0.15, w * 0.45).toFixed(1)}" ry="${rand(h * 0.06, h * 0.2).toFixed(1)}" fill="${Math.random() < 0.6 ? "#7b776d" : "#c4bfb3"}" opacity="${rand(0.35, 0.7).toFixed(2)}"/>`;
+    }
+    for (let k = 0; k < 2; k++) {
+      let x = rand(w * 0.2, w * 0.8), y = rand(h * 0.15, h * 0.5);
+      let d = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+      for (let j = 0; j < 5; j++) { x += rand(-w * 0.18, w * 0.18); y += h * rand(0.06, 0.14); d += ` L${x.toFixed(1)} ${y.toFixed(1)}`; }
+      shapes += `<path d="${d}" fill="none" stroke="#3b3934" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    for (let i = 0; i < 3; i++) {
+      shapes += `<circle cx="${rand(0, w).toFixed(1)}" cy="${rand(0, h).toFixed(1)}" r="${rand(2, 6).toFixed(1)}" fill="#24231f"/>`;
+    }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${shapes}</svg>`;
+    ch.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}"), linear-gradient(${OLD}, ${OLD})`;
+    ch.style.backgroundSize = `${w}px ${h}px, 100% 100%`;
+    ch.classList.remove("fresh");
+    ch.classList.add("worn");
+  }
+  // on vieillit le titre une fois les polices chargées (tailles exactes)
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => letters.forEach(age));
   setTimeout(() => title.classList.add("intro-done", "is-game"), reduceMotion ? 0 : 1300);
 
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const parts = []; // éclats et poussière en mouvement
+  /* --- moteur de particules (plaques d'enduit, gouttes de peinture) --- */
+  const parts = [];
   let running = false;
-
   function loop(now) {
     for (let i = parts.length - 1; i >= 0; i--) {
       const p = parts[i];
       const dt = Math.min((now - p.last) / 1000, 0.05);
-      p.last = now;
-      p.age += dt;
-      p.vy += p.g * dt;
-      p.x += p.vx * dt;
-      p.y += p.vy * dt;
-      p.r += p.vr * dt;
-      const fade = Math.max(0, Math.min(1, (p.life - p.age) / 0.45));
+      p.last = now; p.age += dt;
+      p.vy += p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
+      const fade = Math.max(0, Math.min(1, (p.life - p.age) / 0.4));
       p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${p.r}deg) scale(${p.s ? 0.4 + 0.6 * fade : 1})`;
       p.el.style.opacity = fade;
       if (p.age >= p.life) { p.el.remove(); parts.splice(i, 1); }
@@ -172,71 +195,25 @@ if ("IntersectionObserver" in window && !reduceMotion) {
     if (parts.length) requestAnimationFrame(loop); else running = false;
   }
   function launch(p) {
-    p.last = performance.now();
-    p.age = 0;
-    parts.push(p);
+    p.last = performance.now(); p.age = 0; parts.push(p);
     if (!running) { running = true; requestAnimationFrame(loop); }
   }
 
-  function dust(cx, cy, n) {
-    if (reduceMotion) return;
-    const h = hero.getBoundingClientRect();
-    for (let i = 0; i < n; i++) {
-      const el = document.createElement("i");
-      el.className = "dust";
-      const size = rand(3, 8);
-      el.style.width = el.style.height = size + "px";
-      if (Math.random() < 0.25) el.style.background = "#8f8b82";
-      layer.append(el);
-      launch({ el, x: cx - h.left, y: cy - h.top, vx: rand(-320, 320), vy: rand(-520, -120), g: 1600, r: rand(0, 90), vr: rand(-360, 360), life: rand(0.6, 1.2), s: true });
-    }
-  }
-
-  // fissures dessinées DANS la lettre : on peint le texte avec un fond (couleur + fissures) découpé sur les glyphes
-  function crack(ch, cx, cy) {
-    const w = ch.offsetWidth, hgt = ch.offsetHeight;
-    const r = ch.getBoundingClientRect();
-    const ix = Math.max(w * 0.2, Math.min(w * 0.8, cx - r.left));
-    const iy = Math.max(hgt * 0.25, Math.min(hgt * 0.75, cy - r.top));
-    let paths = "";
-    const rays = 4 + Math.floor(Math.random() * 2);
-    for (let k = 0; k < rays; k++) {
-      const a = (k / rays) * Math.PI * 2 + rand(-0.5, 0.5);
-      const len = Math.max(w, hgt) * rand(0.45, 0.9);
-      let d = `M${ix.toFixed(1)} ${iy.toFixed(1)}`;
-      for (let j = 1; j <= 5; j++) {
-        const t = (len * j) / 5;
-        d += ` L${(ix + Math.cos(a) * t + rand(-5, 5)).toFixed(1)} ${(iy + Math.sin(a) * t + rand(-5, 5)).toFixed(1)}`;
-      }
-      paths += `<path d="${d}"/>`;
-    }
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${hgt}" viewBox="0 0 ${w} ${hgt}"><g fill="none" stroke="#0e0e0d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">${paths}</g><circle cx="${ix.toFixed(1)}" cy="${iy.toFixed(1)}" r="5" fill="#0e0e0d"/></svg>`;
-    ch.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}"), linear-gradient(#e2dfd7, #e2dfd7)`;
-    ch.style.backgroundSize = `${w}px ${hgt}px, 100% 100%`;
-    ch.classList.add("cracked");
-  }
-
-  function shatter(ch, cx, cy) {
-    if (reduceMotion) return;
-    const h = hero.getBoundingClientRect();
-    const r = ch.getBoundingClientRect();
-    const w = ch.offsetWidth, hgt = ch.offsetHeight;
-    const left = r.left + r.width / 2 - w / 2 - h.left;
-    const top = r.top + r.height / 2 - hgt / 2 - h.top;
-    const ix = Math.max(w * 0.2, Math.min(w * 0.8, cx - (left + h.left)));
-    const iy = Math.max(hgt * 0.2, Math.min(hgt * 0.8, cy - (top + h.top)));
+  // l'ancien enduit se détache en plaques
+  function strip(ch, cx, cy) {
+    const hr = hero.getBoundingClientRect(), r = ch.getBoundingClientRect();
+    const w = ch.offsetWidth, h = ch.offsetHeight;
+    const left = r.left + r.width / 2 - w / 2 - hr.left, top = r.top + r.height / 2 - h / 2 - hr.top;
+    const ix = Math.max(w * 0.2, Math.min(w * 0.8, cx - (left + hr.left)));
+    const iy = Math.max(h * 0.2, Math.min(h * 0.8, cy - (top + hr.top)));
     const cs = getComputedStyle(ch);
-    const tilt = parseFloat(ch.style.getPropertyValue("--tilt")) || 0;
-
-    // points répartis sur le contour de la lettre, reliés au point d'impact
-    const n = 9, perim = 2 * (w + hgt), pts = [];
+    const n = 7, perim = 2 * (w + h), pts = [];
     for (let k = 0; k < n; k++) {
-      let t = ((k + rand(-0.3, 0.3)) / n) * perim;
-      t = (t + perim) % perim;
+      const t = ((((k + rand(-0.3, 0.3)) / n) * perim) + perim) % perim;
       if (t < w) pts.push([t, 0]);
-      else if (t < w + hgt) pts.push([w, t - w]);
-      else if (t < 2 * w + hgt) pts.push([w - (t - w - hgt), hgt]);
-      else pts.push([0, hgt - (t - 2 * w - hgt)]);
+      else if (t < w + h) pts.push([w, t - w]);
+      else if (t < 2 * w + h) pts.push([w - (t - w - h), h]);
+      else pts.push([0, h - (t - 2 * w - h)]);
     }
     for (let k = 0; k < n; k++) {
       const a = pts[k], b = pts[(k + 1) % n];
@@ -244,59 +221,85 @@ if ("IntersectionObserver" in window && !reduceMotion) {
       el.className = "shard";
       el.textContent = ch.firstChild.textContent;
       Object.assign(el.style, {
-        width: w + "px", height: hgt + "px",
+        width: w + "px", height: h + "px", color: OLD,
         font: cs.font, letterSpacing: cs.letterSpacing, lineHeight: cs.lineHeight,
         clipPath: `polygon(${ix}px ${iy}px, ${a[0]}px ${a[1]}px, ${b[0]}px ${b[1]}px)`,
         transformOrigin: `${(ix + a[0] + b[0]) / 3}px ${(iy + a[1] + b[1]) / 3}px`,
       });
       layer.append(el);
-      const mx = (a[0] + b[0]) / 2 - ix, my = (a[1] + b[1]) / 2 - iy;
-      const m = Math.hypot(mx, my) || 1;
-      const sp = rand(180, 480);
-      launch({ el, x: left, y: top, vx: (mx / m) * sp + rand(-60, 60), vy: (my / m) * sp - rand(200, 450), g: 2300, r: tilt, vr: rand(-420, 420), life: rand(1.3, 2) });
+      const mx = (a[0] + b[0]) / 2 - ix, my = (a[1] + b[1]) / 2 - iy, m = Math.hypot(mx, my) || 1;
+      const sp = rand(60, 180); // les plaques tombent plus qu'elles n'explosent
+      launch({ el, x: left, y: top, vx: (mx / m) * sp, vy: (my / m) * sp - rand(40, 140), g: 2100, r: 0, vr: rand(-200, 200), life: rand(1, 1.5) });
     }
   }
 
-  function shake() {
-    if (reduceMotion) return;
-    title.classList.remove("shake");
-    void title.offsetWidth;
-    title.classList.add("shake");
+  // le rouleau descend sur la lettre et la repeint
+  function roll(ch) {
+    const hr = hero.getBoundingClientRect(), r = ch.getBoundingClientRect();
+    const el = document.createElement("span");
+    el.className = "roller";
+    el.style.width = r.width + 16 + "px";
+    el.style.left = r.left - hr.left - 8 + "px";
+    el.style.top = r.top - hr.top + "px";
+    layer.append(el);
+    el.animate(
+      [
+        { transform: "translateY(-14px)", opacity: 0 },
+        { transform: "translateY(0)", opacity: 1, offset: 0.12 },
+        { transform: `translateY(${r.height - 6}px)`, opacity: 1, offset: 0.85 },
+        { transform: `translateY(${r.height + 6}px)`, opacity: 0 },
+      ],
+      { duration: 720, easing: "cubic-bezier(.5, 0, .3, 1)" }
+    ).onfinish = () => el.remove();
+    // quelques gouttes de peinture
+    setTimeout(() => {
+      for (let i = 0; i < 6; i++) {
+        const d = document.createElement("i");
+        d.className = "drop";
+        const s = rand(4, 8);
+        d.style.width = s + "px";
+        d.style.height = s * 1.3 + "px";
+        layer.append(d);
+        launch({ el: d, x: r.left - hr.left + rand(0, r.width), y: r.bottom - hr.top - 4, vx: rand(-40, 40), vy: rand(-60, 40), g: 1400, r: 0, vr: 0, life: rand(0.5, 0.9), s: true });
+      }
+    }, 560);
   }
 
-  title.addEventListener("pointerdown", (e) => {
-    const ch = e.target.closest(".ch");
-    if (!ch || !title.classList.contains("is-game") || ch.classList.contains("gone")) return;
-    e.preventDefault();
+  function renovate(ch, cx, cy) {
+    if (!ch || !ch.classList.contains("worn")) return;
     hint.classList.add("is-used");
-    shake();
-    if (!ch.dataset.hits) {
-      ch.dataset.hits = "1";
-      crack(ch, e.clientX, e.clientY);
-      ch.style.setProperty("--tilt", `${rand(4, 9) * (Math.random() < 0.5 ? -1 : 1)}deg`);
-      ch.classList.add("hit1");
-      dust(e.clientX, e.clientY, 8);
-    } else {
-      shatter(ch, e.clientX, e.clientY);
-      ch.classList.add("gone");
-      dust(e.clientX, e.clientY, 18);
-      if (letters.every((l) => l.classList.contains("gone"))) setTimeout(() => (rebuild.hidden = false), 700);
-    }
-  });
+    if (!reduceMotion) { strip(ch, cx, cy); roll(ch); }
+    ch.classList.remove("worn");
+    ch.style.removeProperty("background-image");
+    ch.style.removeProperty("background-size");
+    ch.classList.add("fresh");
+    if (letters.every((l) => !l.classList.contains("worn"))) setTimeout(() => (again.hidden = false), 900);
+  }
 
-  rebuild.addEventListener("click", () => {
-    rebuild.hidden = true;
-    letters.forEach((ch, i) => {
-      delete ch.dataset.hits;
-      ch.classList.remove("hit1", "gone");
-      ch.style.removeProperty("--tilt");
-      ch.classList.remove("cracked");
-      ch.style.removeProperty("background-image");
-      ch.style.removeProperty("background-size");
-      ch.style.setProperty("--rd", `${i * 0.06}s`);
-      ch.classList.add("drop");
-      ch.addEventListener("animationend", () => ch.classList.remove("drop"), { once: true });
-    });
+  // clic sur une lettre, ou glisser le rouleau sur plusieurs lettres
+  let painting = false;
+  const letterAt = (x, y) => document.elementFromPoint(x, y)?.closest("#title .ch:not(.dot)");
+  title.addEventListener("pointerdown", (e) => {
+    if (!title.classList.contains("is-game")) return;
+    const ch = e.target.closest(".ch:not(.dot)");
+    if (!ch) return;
+    e.preventDefault();
+    painting = true;
+    renovate(ch, e.clientX, e.clientY);
+  });
+  window.addEventListener("pointermove", (e) => {
+    if (painting) renovate(letterAt(e.clientX, e.clientY), e.clientX, e.clientY);
+  });
+  ["pointerup", "pointercancel"].forEach((t) => window.addEventListener(t, () => (painting = false)));
+
+  // recommencer : le titre redevient « usé »
+  again.addEventListener("click", () => {
+    again.hidden = true;
+    letters.forEach((ch, i) => setTimeout(() => {
+      age(ch);
+      ch.classList.add("aging");
+      ch.addEventListener("animationend", () => ch.classList.remove("aging"), { once: true });
+    }, i * 45));
   });
 })();
 
