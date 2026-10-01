@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bastion Rénovation · Rénovation intérieure dans le Var</title>
 <meta name="description" content="Artisan rénovation dans le Var : salle de bain, cuisine, plâtrerie, isolation, sols et peinture. De la démolition aux finitions, devis gratuit sous 48 h.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; media-src https://videos.pexels.com; connect-src https://api.web3forms.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
@@ -97,7 +100,7 @@
         <legend>Où et quelle taille&nbsp;?</legend>
         <label class="field">
           <span>Commune du chantier</span>
-          <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus">
+          <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus" maxlength="80">
         </label>
         <p class="sub">Surface approximative</p>
         <div class="choices">
@@ -112,11 +115,12 @@
       <fieldset class="step" data-step="3">
         <legend>Comment vous joindre&nbsp;?</legend>
         <div class="row">
-          <label class="field"><span>Nom</span><input type="text" name="nom" autocomplete="name"></label>
-          <label class="field"><span>Téléphone</span><input type="tel" name="telephone" autocomplete="tel"></label>
+          <label class="field"><span>Nom</span><input type="text" name="nom" autocomplete="name" maxlength="80"></label>
+          <label class="field"><span>Téléphone</span><input type="tel" name="telephone" autocomplete="tel" maxlength="20"></label>
         </div>
-        <label class="field"><span>Un détail à ajouter&nbsp;? <em>(facultatif)</em></span><textarea name="message" rows="2"></textarea></label>
+        <label class="field"><span>Un détail à ajouter&nbsp;? <em>(facultatif)</em></span><textarea name="message" rows="2" maxlength="1000"></textarea></label>
         <p class="err" data-for="3">Nom et téléphone valides, s’il vous plaît.</p>
+        <p class="rgpd-note">Vos coordonnées servent uniquement à vous recontacter pour ce devis. <a href="confidentialite.html">Données personnelles</a></p>
       </fieldset>
 
       <div class="step step--done" data-step="4" tabindex="-1">
@@ -141,7 +145,7 @@
     <a href="mailto:contact@bastion-renovation.fr">contact@bastion-renovation.fr</a>
     <a href="devis.html">Demander un devis</a>
     <span>Auto-entrepreneur · Var (83)</span>
-    <span class="foot__small">© <span id="year">2026</span> · <a href="#">Mentions légales</a> · Photos Unsplash</span>
+    <span class="foot__small">© <span id="year">2026</span> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · Photos Unsplash, vidéo Pexels</span>
   </div>
 </footer>
 

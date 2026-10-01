@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Demande de devis · Bastion Rénovation</title>
 <meta name="description" content="Demandez un devis gratuit pour la rénovation de votre salle de bain, cuisine, murs ou sols dans le Var. Réponse sous 48 h.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; media-src https://videos.pexels.com; connect-src https://api.web3forms.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -73,14 +76,14 @@
           </label>
           <label class="field">
             <span>Surface approximative (m²)</span>
-            <input type="number" name="surface" min="1" inputmode="numeric" placeholder="ex. 12">
+            <input type="number" name="surface" min="1" max="100000" inputmode="numeric" placeholder="ex. 12">
           </label>
         </div>
 
         <div class="row">
           <label class="field">
             <span>Commune *</span>
-            <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus">
+            <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus" maxlength="80">
             <em class="dp-err" data-err="commune">Indiquez la commune du chantier.</em>
           </label>
           <label class="field">
@@ -108,7 +111,7 @@
 
         <label class="field">
           <span>Décrivez votre projet</span>
-          <textarea name="message" rows="5" placeholder="Pièces concernées, état actuel, ce que vous aimeriez obtenir, matériaux souhaités…"></textarea>
+          <textarea name="message" rows="5" maxlength="3000" placeholder="Pièces concernées, état actuel, ce que vous aimeriez obtenir, matériaux souhaités…"></textarea>
         </label>
       </fieldset>
 
@@ -117,18 +120,18 @@
         <div class="row">
           <label class="field">
             <span>Nom et prénom *</span>
-            <input type="text" name="nom" autocomplete="name">
+            <input type="text" name="nom" autocomplete="name" maxlength="80">
             <em class="dp-err" data-err="nom">Indiquez votre nom.</em>
           </label>
           <label class="field">
             <span>Téléphone *</span>
-            <input type="tel" name="telephone" autocomplete="tel" placeholder="06 …">
+            <input type="tel" name="telephone" autocomplete="tel" placeholder="06 …" maxlength="20">
             <em class="dp-err" data-err="telephone">Numéro de téléphone invalide.</em>
           </label>
         </div>
         <label class="field">
           <span>E-mail *</span>
-          <input type="email" name="email" autocomplete="email" placeholder="vous@exemple.fr">
+          <input type="email" name="email" autocomplete="email" placeholder="vous@exemple.fr" maxlength="120">
           <em class="dp-err" data-err="email">Adresse e-mail invalide.</em>
         </label>
 
@@ -145,7 +148,7 @@
 
       <label class="dp-consent">
         <input type="checkbox" name="rgpd">
-        <span>J’accepte que ces informations soient utilisées uniquement pour établir mon devis. Elles ne sont ni revendues ni partagées.</span>
+        <span>J’accepte que ces informations soient utilisées uniquement pour établir mon devis. Elles ne sont ni revendues ni partagées. <a href="confidentialite.html">En savoir plus</a></span>
       </label>
       <p class="dp-err" data-err="rgpd">Merci de cocher cette case pour envoyer la demande.</p>
 
@@ -169,7 +172,7 @@
     <a href="tel:+33600000000">06 00 00 00 00</a>
     <a href="mailto:contact@bastion-renovation.fr">contact@bastion-renovation.fr</a>
     <span>Auto-entrepreneur · Var (83)</span>
-    <span class="foot__small">© <span id="year">2026</span> · <a href="#">Mentions légales</a></span>
+    <span class="foot__small">© <span id="year">2026</span> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></span>
   </div>
 </footer>
 

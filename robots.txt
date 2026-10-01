@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yoannpro83-hue.github.io/renovation/sitemap.xml
