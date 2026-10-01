@@ -5,14 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bastion Rénovation · Rénovation intérieure dans le Var</title>
 <meta name="description" content="Artisan rénovation dans le Var : salle de bain, cuisine, plâtrerie, isolation, sols et peinture. De la démolition aux finitions, devis gratuit sous 48 h.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; media-src https://videos.pexels.com; connect-src https://api.web3forms.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://api.web3forms.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,10 +24,10 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero__media" id="hero-media">
-    <img class="hero__img" src="https://images.unsplash.com/photo-1482731215275-a1f151646268?auto=format&fit=crop&w=2000&q=70" alt="Artisan sur une échelle dans une pièce en travaux">
+    <img class="hero__img" src="img/hero-1920.webp" srcset="img/hero-900.webp 900w, img/hero-1920.webp 1920w" sizes="100vw" alt="Artisan sur une échelle dans une pièce en travaux">
     <video class="hero__video" id="hero-video" muted loop playsinline preload="none" aria-hidden="true"
-      data-src="https://videos.pexels.com/video-files/6474089/6474089-hd_1280_720_25fps.mp4"
-      data-src-small="https://videos.pexels.com/video-files/6474089/6474089-sd_960_540_25fps.mp4"></video>
+      data-src="video/chantier-720.mp4"
+      data-src-small="video/chantier-540.mp4"></video>
     </div>
     <div class="shards" id="shards" aria-hidden="true"></div>
     <div class="hero__in">
@@ -54,19 +51,19 @@
     </div>
     <div class="panels">
       <article class="panel" data-reveal>
-        <img src="https://images.unsplash.com/photo-1661107259637-4e1c55462428?auto=format&fit=crop&w=1000&q=70" alt="Salle de bain rénovée avec douche à l’italienne et grand miroir" loading="lazy">
+        <img src="img/salle-de-bain.webp" alt="Salle de bain rénovée avec douche à l’italienne et grand miroir" loading="lazy">
         <div class="panel__txt"><h3>Salle de bain</h3><p>Douche à l’italienne, faïence, meuble vasque. Clé en main.</p></div>
       </article>
       <article class="panel" data-reveal>
-        <img src="https://images.unsplash.com/photo-1628797285815-453c1d0d21e3?auto=format&fit=crop&w=1000&q=70" alt="Cuisine rustique rénovée avec îlot en bois" loading="lazy">
+        <img src="img/cuisine.webp" alt="Cuisine rustique rénovée avec îlot en bois" loading="lazy">
         <div class="panel__txt"><h3>Cuisine</h3><p>Dépose de l’ancienne, réseaux, pose et finitions.</p></div>
       </article>
       <article class="panel" data-reveal>
-        <img src="https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?auto=format&fit=crop&w=1000&q=70" alt="Mains appliquant du plâtre sur un mur avec des platoirs" loading="lazy">
+        <img src="img/platrerie.webp" alt="Mains appliquant du plâtre sur un mur avec des platoirs" loading="lazy">
         <div class="panel__txt"><h3>Plâtrerie</h3><p>Cloisons, faux plafonds, isolation, enduits.</p></div>
       </article>
       <article class="panel" data-reveal>
-        <img src="https://images.unsplash.com/photo-1693985120993-e9b203ce7631?auto=format&fit=crop&w=1000&q=70" alt="Rouleau de peinture sur un mur blanc" loading="lazy">
+        <img src="img/peinture.webp" alt="Rouleau de peinture sur un mur blanc" loading="lazy">
         <div class="panel__txt"><h3>Sols &amp; peinture</h3><p>Carrelage, parquet, peinture : les finitions qui changent tout.</p></div>
       </article>
     </div>
