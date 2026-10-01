@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demande de devis · Bastion Démolition</title>
+<meta name="description" content="Demandez un devis gratuit pour votre démolition, curage, terrassement ou évacuation de gravats dans le Var. Réponse sous 48 h.">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page-devis">
+
+<header class="top top--solid">
+  <a class="logo" href="index.html">Bastion<i></i></a>
+  <a class="top__tel" href="tel:+33600000000">06 00 00 00 00</a>
+  <a class="btn btn--ghost btn--sm" href="index.html">← Retour au site</a>
+</header>
+
+<main class="devis-page">
+  <section class="dp-head">
+    <p class="hero__where">Devis gratuit · Réponse sous 48 h</p>
+    <h1 data-split>Parlez-moi de votre chantier.</h1>
+    <p class="dp-lead" data-reveal style="--d:.3s">Plus vous m’en dites, plus mon devis sera précis. Seuls les champs marqués d’une étoile sont obligatoires.</p>
+  </section>
+
+  <div class="dp-grid">
+    <aside class="dp-aside" data-reveal>
+      <h2>Et ensuite&nbsp;?</h2>
+      <ol class="dp-steps">
+        <li><b>Je vous rappelle</b><span>Sous 48&nbsp;h, pour préciser le besoin.</span></li>
+        <li><b>Je passe voir</b><span>Visite gratuite du chantier, sans engagement.</span></li>
+        <li><b>Vous recevez le devis</b><span>Un prix ferme, détaillé poste par poste.</span></li>
+      </ol>
+      <div class="dp-contact">
+        <span>Vous préférez appeler&nbsp;?</span>
+        <a href="tel:+33600000000">06 00 00 00 00</a>
+        <a class="dp-mail" href="mailto:contact@bastion-demolition.fr">contact@bastion-demolition.fr</a>
+      </div>
+    </aside>
+
+    <form class="dp-form" id="devis-form" novalidate data-reveal style="--d:.1s">
+      <fieldset class="dp-block">
+        <legend>Le chantier</legend>
+
+        <div class="dp-field">
+          <span class="dp-label">Type de travaux *</span>
+          <div class="choices choices--multi">
+            <label><input type="checkbox" name="travaux" value="Démolition"><span>Démolition</span></label>
+            <label><input type="checkbox" name="travaux" value="Curage"><span>Curage</span></label>
+            <label><input type="checkbox" name="travaux" value="Terrassement"><span>Terrassement</span></label>
+            <label><input type="checkbox" name="travaux" value="Évacuation de gravats"><span>Évacuation</span></label>
+            <label><input type="checkbox" name="travaux" value="Autre"><span>Autre</span></label>
+          </div>
+          <p class="dp-err" data-err="travaux">Cochez au moins un type de travaux.</p>
+        </div>
+
+        <div class="row">
+          <label class="field">
+            <span>Type de bien</span>
+            <select name="bien">
+              <option value="">Choisir…</option>
+              <option>Maison</option>
+              <option>Appartement</option>
+              <option>Garage / abri</option>
+              <option>Mur / muret</option>
+              <option>Terrain</option>
+              <option>Local professionnel</option>
+              <option>Autre</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Surface approximative (m²)</span>
+            <input type="number" name="surface" min="1" inputmode="numeric" placeholder="ex. 40">
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="field">
+            <span>Commune *</span>
+            <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus">
+            <em class="dp-err" data-err="commune">Indiquez la commune du chantier.</em>
+          </label>
+          <label class="field">
+            <span>Démarrage souhaité</span>
+            <select name="delai">
+              <option value="">Choisir…</option>
+              <option>Dès que possible</option>
+              <option>Dans le mois</option>
+              <option>Dans 1 à 3 mois</option>
+              <option>Pas encore fixé</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Décrivez votre projet</span>
+          <textarea name="message" rows="5" placeholder="Accès au chantier, étage, matériaux, présence d’amiante connue, ce qui doit rester debout…"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset class="dp-block">
+        <legend>Vos coordonnées</legend>
+        <div class="row">
+          <label class="field">
+            <span>Nom et prénom *</span>
+            <input type="text" name="nom" autocomplete="name">
+            <em class="dp-err" data-err="nom">Indiquez votre nom.</em>
+          </label>
+          <label class="field">
+            <span>Téléphone *</span>
+            <input type="tel" name="telephone" autocomplete="tel" placeholder="06 …">
+            <em class="dp-err" data-err="telephone">Numéro de téléphone invalide.</em>
+          </label>
+        </div>
+        <label class="field">
+          <span>E-mail *</span>
+          <input type="email" name="email" autocomplete="email" placeholder="vous@exemple.fr">
+          <em class="dp-err" data-err="email">Adresse e-mail invalide.</em>
+        </label>
+
+        <div class="dp-field">
+          <span class="dp-label">Je préfère être recontacté par</span>
+          <div class="choices choices--inline">
+            <label><input type="radio" name="contact" value="Téléphone" checked><span>Téléphone</span></label>
+            <label><input type="radio" name="contact" value="E-mail"><span>E-mail</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+      <label class="dp-consent">
+        <input type="checkbox" name="rgpd">
+        <span>J’accepte que ces informations soient utilisées uniquement pour établir mon devis. Elles ne sont ni revendues ni partagées.</span>
+      </label>
+      <p class="dp-err" data-err="rgpd">Merci de cocher cette case pour envoyer la demande.</p>
+
+      <div class="dp-submit">
+        <button class="btn btn--lime" type="submit">Envoyer ma demande <span aria-hidden="true">→</span></button>
+        <p class="dp-status" id="dp-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="dp-done" id="dp-done" hidden tabindex="-1">
+        <p class="done__big"><svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>Demande envoyée.</p>
+        <p id="dp-done-msg">Merci&nbsp;! Je vous recontacte sous 48&nbsp;h.</p>
+        <a class="btn btn--ghost" href="index.html">Retour au site</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot__row">
+    <a class="logo" href="index.html">Bastion<i></i></a>
+    <a href="tel:+33600000000">06 00 00 00 00</a>
+    <a href="mailto:contact@bastion-demolition.fr">contact@bastion-demolition.fr</a>
+    <span>Auto-entrepreneur · Var (83)</span>
+    <span class="foot__small">© <span id="year">2026</span> · <a href="#">Mentions légales</a></span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="devis.js"></script>
+</body>
+</html>

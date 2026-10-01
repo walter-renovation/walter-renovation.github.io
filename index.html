@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bastion Démolition · Démolition, curage et terrassement dans le Var</title>
+<meta name="description" content="Artisan démolisseur dans le Var : démolition, curage, terrassement à la mini-pelle et évacuation des gravats. Devis gratuit sous 48 h.">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="#">Bastion<i></i></a>
+  <a class="top__tel" href="tel:+33600000000">06 00 00 00 00</a>
+  <a class="btn btn--lime btn--sm" href="devis.html">Devis gratuit</a>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__media" id="hero-media">
+    <img class="hero__img" src="https://images.unsplash.com/photo-1562630426-5942d5363820?auto=format&fit=crop&w=2000&q=70" alt="Artisan au marteau-piqueur cassant une dalle de béton">
+    <video class="hero__video" id="hero-video" muted loop playsinline preload="none" aria-hidden="true"
+      data-src="https://videos.pexels.com/video-files/24964774/11899199_960_540_60fps.mp4"></video>
+    </div>
+    <div class="shards" id="shards" aria-hidden="true"></div>
+    <div class="hero__in">
+      <p class="hero__where">Artisan démolisseur · Var (83)</p>
+      <div class="title-wrap">
+        <h1 id="title" aria-label="Place nette."><span class="line"><span>Place</span></span><span class="line"><span>nette.</span></span></h1>
+        <button class="hero__rebuild" id="rebuild" type="button" hidden>Tout est rasé. <b>Reconstruire ↺</b></button>
+      </div>
+      <p class="hero__hint" id="hint" aria-hidden="true">Tapez sur les lettres pour démolir</p>
+      <div class="hero__bottom">
+        <p class="hero__lead">Je démolis, je trie, j’évacue. Vous récupérez un chantier propre, prêt pour la suite.</p>
+        <a class="btn btn--lime" href="#estimer">Estimer mon chantier <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" aria-labelledby="services-t">
+    <div class="services__head">
+      <h2 id="services-t" data-split>Ce que je fais</h2>
+      <p data-reveal style="--d:.25s">Un seul interlocuteur, du premier coup de masse au dernier gravat.</p>
+    </div>
+    <div class="panels">
+      <article class="panel" data-reveal>
+        <img src="https://images.unsplash.com/photo-1785484267813-7e6bbe68315b?auto=format&fit=crop&w=1000&q=70" alt="Mini-pelle au travail dans une cour" loading="lazy">
+        <div class="panel__txt"><h3>Démolition</h3><p>Garages, abris, murets, dépendances. À la mini-pelle ou à la main.</p></div>
+      </article>
+      <article class="panel" data-reveal>
+        <img src="https://images.unsplash.com/photo-1634586648651-f1fb9ec10d90?auto=format&fit=crop&w=1000&q=70" alt="Pièce vidée jusqu’à la structure, étais métalliques au sol" loading="lazy">
+        <div class="panel__txt"><h3>Curage</h3><p>Cloisons, plafonds, sols : je vide tout avant votre rénovation.</p></div>
+      </article>
+      <article class="panel" data-reveal>
+        <img src="https://images.unsplash.com/photo-1630693916229-c1a3371d16f2?auto=format&fit=crop&w=1000&q=70" alt="Mini-pelle creusant la terre" loading="lazy">
+        <div class="panel__txt"><h3>Terrassement</h3><p>Décaissement, tranchées, nivellement à la mini-pelle.</p></div>
+      </article>
+      <article class="panel" data-reveal>
+        <img src="https://images.unsplash.com/photo-1637986793659-991282d1b05e?auto=format&fit=crop&w=1000&q=70" alt="Brouette remplie de gravats et de terre" loading="lazy">
+        <div class="panel__txt"><h3>Évacuation</h3><p>Gravats chargés, évacués et déposés en filière agréée.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ESTIMATION -->
+  <section class="estimer" id="estimer" aria-labelledby="estimer-t">
+    <div class="estimer__intro">
+      <h2 id="estimer-t" data-split>Votre devis<br>en 3 clics.</h2>
+      <p data-reveal style="--d:.3s">Pas de long formulaire. Je vous rappelle sous 48&nbsp;h, c’est gratuit et sans engagement.</p>
+      <a class="estimer__call" href="tel:+33600000000" data-reveal style="--d:.45s"><span>Ou appelez-moi directement</span>06 00 00 00 00</a>
+      <a class="estimer__full" href="devis.html" data-reveal style="--d:.55s">Projet plus complexe&nbsp;? <b>Formulaire détaillé →</b></a>
+    </div>
+
+    <form class="wizard" id="wizard" novalidate data-reveal>
+      <div class="wizard__bar" aria-hidden="true"><span id="bar"></span></div>
+      <p class="wizard__count" id="count">Étape 1 sur 3</p>
+
+      <fieldset class="step is-active" data-step="1">
+        <legend>Quel type de chantier&nbsp;?</legend>
+        <div class="choices choices--big">
+          <label><input type="radio" name="travaux" value="Démolition"><span>Démolition</span></label>
+          <label><input type="radio" name="travaux" value="Curage"><span>Curage</span></label>
+          <label><input type="radio" name="travaux" value="Terrassement"><span>Terrassement</span></label>
+          <label><input type="radio" name="travaux" value="Évacuation de gravats"><span>Évacuation</span></label>
+        </div>
+        <p class="err" data-for="1">Choisissez un type de chantier.</p>
+      </fieldset>
+
+      <fieldset class="step" data-step="2">
+        <legend>Où et quelle taille&nbsp;?</legend>
+        <label class="field">
+          <span>Commune du chantier</span>
+          <input type="text" name="commune" autocomplete="address-level2" placeholder="ex. Fréjus">
+        </label>
+        <p class="sub">Surface approximative</p>
+        <div class="choices">
+          <label><input type="radio" name="surface" value="Moins de 20 m²"><span>&lt; 20 m²</span></label>
+          <label><input type="radio" name="surface" value="20 à 80 m²"><span>20–80 m²</span></label>
+          <label><input type="radio" name="surface" value="80 à 200 m²"><span>80–200 m²</span></label>
+          <label><input type="radio" name="surface" value="Plus de 200 m²"><span>200 m² +</span></label>
+        </div>
+        <p class="err" data-for="2">Indiquez au moins la commune.</p>
+      </fieldset>
+
+      <fieldset class="step" data-step="3">
+        <legend>Comment vous joindre&nbsp;?</legend>
+        <div class="row">
+          <label class="field"><span>Nom</span><input type="text" name="nom" autocomplete="name"></label>
+          <label class="field"><span>Téléphone</span><input type="tel" name="telephone" autocomplete="tel"></label>
+        </div>
+        <label class="field"><span>Un détail à ajouter&nbsp;? <em>(facultatif)</em></span><textarea name="message" rows="2"></textarea></label>
+        <p class="err" data-for="3">Nom et téléphone valides, s’il vous plaît.</p>
+      </fieldset>
+
+      <div class="step step--done" data-step="4" tabindex="-1">
+        <p class="done__big"><svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>C’est noté.</p>
+        <p id="done-msg">Je vous rappelle sous 48&nbsp;h pour passer voir le chantier.</p>
+      </div>
+
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+      <div class="wizard__nav" id="nav">
+        <button type="button" class="btn btn--ghost" id="prev">← Retour</button>
+        <button type="submit" class="btn btn--lime" id="next">Continuer</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="foot">
+  <a class="foot__big" href="tel:+33600000000" aria-label="Appeler le 06 00 00 00 00"><span data-split="chars">06 00 00 00 00</span></a>
+  <div class="foot__row">
+    <span class="logo">Bastion<i></i></span>
+    <a href="mailto:contact@bastion-demolition.fr">contact@bastion-demolition.fr</a>
+    <a href="devis.html">Demander un devis</a>
+    <span>Auto-entrepreneur · Var (83)</span>
+    <span class="foot__small">© <span id="year">2026</span> · <a href="#">Mentions légales</a> · Photos Unsplash</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
